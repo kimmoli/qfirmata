@@ -1,17 +1,16 @@
 TEMPLATE = lib
 CONFIG += plugin c++11 debug
-QT += qml serialport
+QT += qml
 
-DESTDIR = imports/Firmata
+PLUGIN_IMPORT_PATH = org/kimmoli/firmata
 TARGET  = qmlfirmataplugin
 
 SOURCES += \
-	plugin.cpp \
-	src/firmata.cpp \
-	src/backends/backend.cpp \
-	src/backends/serialport.cpp \
-	src/backends/serialinfo.cpp \
-	src/pins/pin.cpp \
+    plugin.cpp \
+    src/firmata.cpp \
+    src/backends/backend.cpp \
+    src/backends/serialport.cpp \
+    src/pins/pin.cpp \
     src/pins/digitalpin.cpp \
     src/pins/pwmpin.cpp \
     src/pins/analogpin.cpp \
@@ -20,13 +19,12 @@ SOURCES += \
     src/pins/i2c.cpp
 
 HEADERS += \
-	plugin.h \
-	src/utils.h \
-	src/firmata.h \
-	src/backends/backend.h \
-	src/backends/serialport.h \
-	src/backends/serialinfo.h \
-	src/pins/pin.h \
+    plugin.h \
+    src/utils.h \
+    src/firmata.h \
+    src/backends/backend.h \
+    src/backends/serialport.h \
+    src/pins/pin.h \
     src/pins/digitalpin.h \
     src/pins/pwmpin.h \
     src/pins/analogpin.h \
@@ -34,12 +32,14 @@ HEADERS += \
     src/pins/encoder.h \
     src/pins/i2c.h
 
-pluginfiles.files += \
-    imports/Firmata/qmldir
+target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
+INSTALLS += target
 
-installPath = $$[QT_INSTALL_QML]/Firmata
-pluginfiles.path = $$installPath
-target.path = $$installPath
+qmldir.files += $$_PRO_FILE_PWD_/qmldir
+qmldir.path +=  $$target.path
+INSTALLS += qmldir
 
-INSTALLS += target pluginfiles
+OTHER_FILES += \
+    rpm/qfirmata.spec \
+    rpm/qmlfirmataplugin.spec
 

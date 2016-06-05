@@ -18,9 +18,10 @@
 #ifndef QFIRMATA_BACKEND_SERIAL_H
 #define QFIRMATA_BACKEND_SERIAL_H
 
+#include <QTimer>
 #include "backend.h"
 
-#include <cstdint>
+#include <inttypes.h>
 
 //! A serial port based Firmata backend
 
@@ -50,6 +51,12 @@ public:
 
 	int baudRate() const;
 	void setBaudRate(int br);
+    void closeDevice();
+    void doRead();
+    int waitInput();
+
+private slots:
+    void pollInput();
 
 signals:
 	void deviceChanged(const QString &device);
@@ -58,12 +65,10 @@ signals:
 protected:
 	void writeBuffer(const uint8_t *buffer, int len) override;
 
-private slots:
-	void onReadyRead();
-
 private:
 	struct Private;
-	Private *d;
+    Private *d;
+    QTimer *polltimer;
 };
 
 #endif

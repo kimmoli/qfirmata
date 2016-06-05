@@ -140,6 +140,8 @@ QQmlListProperty<Pin> Firmata::pins()
 
 void Firmata::pinAdd(QQmlListProperty<Pin> *list, Pin *p)
 {
+    qDebug("adding %d", p->pin());
+
 	Firmata *f = static_cast<Firmata*>(list->object);
 	p->setFirmata(f);
 	f->d->pins.append(p);

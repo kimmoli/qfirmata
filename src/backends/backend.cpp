@@ -213,14 +213,14 @@ void FirmataBackend::writeAnalogPin(uint8_t pin, uint16_t value)
 
 void FirmataBackend::writeDigitalPin(uint8_t pin, bool value)
 {
-	qDebug("Write digital pin %d <- %d", pin, value);
+    qDebug("Write digital pin %d <- %d", pin, value);
 	if(pin<0x80) {
 		const uint8_t buffer[] {
-			CMD_SET_DIGITAL_PIN,
-			pin,
-			value
+            CMD_SET_DIGITAL_PIN,
+            pin,
+            value
 		};
-		writeBuffer(buffer, sizeof(buffer));
+        writeBuffer(buffer, sizeof(buffer));
 
 	} else {
 		qFatal("Pin %d not supported (max is 127)", pin);

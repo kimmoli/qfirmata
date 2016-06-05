@@ -27,20 +27,12 @@
 #include "src/pins/i2c.h"
 
 #include "src/backends/serialport.h"
-#include "src/backends/serialinfo.h"
 
 #include <qqml.h>
 
-static QObject *serialportlist_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
-	Q_UNUSED(engine);
-	Q_UNUSED(scriptEngine);
-	return new SerialPortList;
-}
-
 void QmlFirmataPlugin::registerTypes(const char *uri)
 {
-	Q_ASSERT(uri == QLatin1String("Firmata"));
+    Q_ASSERT(uri == QLatin1String("org.kimmoli.firmata"));
 
     qmlRegisterType<Firmata>(uri, 1, 0, "Firmata");
 
@@ -54,6 +46,5 @@ void QmlFirmataPlugin::registerTypes(const char *uri)
 
     qmlRegisterUncreatableType<FirmataBackend>(uri, 1, 0, "FirmataBackend", "Use a concrete backend class, such as SerialFirmata");
     qmlRegisterType<SerialFirmata>(uri, 1, 0, "SerialFirmata");
-	qmlRegisterSingletonType<SerialPortList>(uri, 1, 0, "SerialPortList", serialportlist_provider);
 }
 
